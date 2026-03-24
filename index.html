@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM & Workflow Automation for Small B2B Teams</title>
+  <meta name="description" content="Reduce manual admin, clean up CRM chaos, and automate follow-up, onboarding, and internal workflows for your small B2B team." />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.1);
+      --text: #eef2ff;
+      --muted: #c7d2fe;
+      --line: rgba(255,255,255,0.12);
+      --accent: #7c3aed;
+      --accent-2: #22c55e;
+      --shadow: 0 20px 50px rgba(0,0,0,0.28);
+      --radius: 20px;
+      --max: 1160px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124, 58, 237, 0.28), transparent 30%),
+        radial-gradient(circle at top right, rgba(34, 197, 94, 0.16), transparent 20%),
+        linear-gradient(180deg, #0b1020 0%, #0f172a 100%);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(11, 16, 32, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      font-size: 0.98rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--accent), #5b21b6);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .button-primary:hover { transform: translateY(-1px); }
+
+    .button-secondary {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .hero {
+      padding: 88px 0 52px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 0.9rem;
+      border: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 0.98;
+      margin: 0 0 18px;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 0 22px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .mini-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      font-size: 0.88rem;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      border: 1px solid var(--line);
+    }
+
+    .hero-card, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 22px;
+    }
+
+    .flow {
+      display: grid;
+      gap: 14px;
+    }
+
+    .flow-box {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .flow-label {
+      font-size: 0.8rem;
+      color: #a5b4fc;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .flow-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .flow-step {
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(124, 58, 237, 0.22);
+      border: 1px solid rgba(124, 58, 237, 0.35);
+    }
+
+    .arrow { color: #94a3b8; align-self: center; }
+
+    section {
+      padding: 28px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      margin: 0;
+      letter-spacing: -0.03em;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      max-width: 720px;
+      margin: 8px 0 0;
+    }
+
+    .grid-3, .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .card {
+      padding: 22px;
+      height: 100%;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.16rem;
+    }
+
+    .card p, .card li { color: var(--muted); }
+
+    ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+    }
+
+    .price {
+      display: inline-block;
+      margin-top: 14px;
+      font-weight: 800;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .steps {
+      counter-reset: step;
+      display: grid;
+      gap: 18px;
+    }
+
+    .step {
+      position: relative;
+      padding-left: 74px;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #4f46e5);
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    .workflow-card {
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+    }
+
+    .workflow-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+    }
+
+    .workflow-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .result {
+      font-size: 0.92rem;
+      color: #bbf7d0;
+      font-weight: 700;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+
+    .stat-box {
+      display: grid;
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+
+    .cta {
+      padding: 54px 0 88px;
+    }
+
+    .cta-box {
+      padding: 28px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(34, 197, 94, 0.12));
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    footer {
+      padding: 16px 0 42px;
+      color: #94a3b8;
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .kicker {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #a5b4fc;
+      margin-bottom: 8px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .grid-3,
+      .grid-2,
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding-top: 66px; }
+      .card, .hero-card, .cta-box { padding: 18px; }
+      .step { padding-left: 64px; }
+      .step::before {
+        width: 42px;
+        height: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="brand">Liam Shipman — CRM & Workflow Automation</a>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#workflows">Workflows</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="button button-primary">Book a Call</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">For small B2B teams buried in manual work</div>
+        <h1>Fix CRM chaos and automate the repetitive work slowing down your business.</h1>
+        <p>
+          I help small B2B teams clean up messy workflows, automate follow-up and onboarding, and build simple systems that save time and keep things from slipping through the cracks.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="button button-primary">Book a free 15-minute fit call</a>
+          <a href="#workflows" class="button button-secondary">See example workflows</a>
+        </div>
+        <div class="mini-proof">
+          <span class="pill">Lead follow-up</span>
+          <span class="pill">CRM cleanup</span>
+          <span class="pill">Onboarding handoffs</span>
+          <span class="pill">Internal notifications</span>
+          <span class="pill">Reporting workflows</span>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="kicker">Sample automation</div>
+        <div class="flow">
+          <div class="flow-box">
+            <div class="flow-label">Inbound lead workflow</div>
+            <div class="flow-steps">
+              <span class="flow-step">Website Form</span>
+              <span class="arrow">→</span>
+              <span class="flow-step">CRM Record</span>
+              <span class="arrow">→</span>
+              <span class="flow-step">Slack Alert</span>
+              <span class="arrow">→</span>
+              <span class="flow-step">Follow-up Task</span>
+            </div>
+          </div>
+          <div class="flow-box">
+            <div class="flow-label">Customer onboarding workflow</div>
+            <div class="flow-steps">
+              <span class="flow-step">Signed Contract</span>
+              <span class="arrow">→</span>
+              <span class="flow-step">Checklist Created</span>
+              <span class="arrow">→</span>
+              <span class="flow-step">Welcome Email</span>
+              <span class="arrow">→</span>
+              <span class="flow-step">Kickoff Scheduled</span>
+            </div>
+          </div>
+          <div class="flow-box">
+            <div class="flow-label">What this fixes</div>
+            <div class="flow-steps">
+              <span class="flow-step">Less manual admin</span>
+              <span class="flow-step">Faster response times</span>
+              <span class="flow-step">Cleaner handoffs</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>What I help with</h2>
+          <p class="section-sub">Most small teams do not have a software problem. They have a workflow problem.</p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Leads sit too long</h3>
+          <p>Inbound leads come in, nobody follows up quickly, and good opportunities cool off for dumb reasons.</p>
+        </div>
+        <div class="card">
+          <h3>Customer handoffs are messy</h3>
+          <p>Sales closes the deal, then onboarding starts with missing context, scattered notes, and extra back-and-forth.</p>
+        </div>
+        <div class="card">
+          <h3>Too much admin is manual</h3>
+          <p>Tasks, reminders, updates, spreadsheets, status changes, and internal follow-up still depend on memory and luck.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Who I work with</h2>
+          <p class="section-sub">Best fit: small B2B companies that are growing, but still running too much of the business by hand.</p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Small B2B SaaS teams</h3>
+          <p>Need cleaner follow-up, clearer ownership, better onboarding, and less pipeline mess.</p>
+        </div>
+        <div class="card">
+          <h3>Agencies & service businesses</h3>
+          <p>Need client intake, project handoff, reminders, and internal tracking that do not rely on manual babysitting.</p>
+        </div>
+        <div class="card">
+          <h3>Founder-led teams</h3>
+          <p>Have decent tools already, but systems are duct-taped together and nobody has time to fix them properly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Services</h2>
+          <p class="section-sub">Simple offers. Clear scope. No bloated “digital transformation” nonsense.</p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Workflow Automation Audit</h3>
+          <p>I review 1–2 workflows, identify bottlenecks, map automation opportunities, and show you the fastest wins.</p>
+          <ul>
+            <li>Current workflow review</li>
+            <li>Automation opportunities mapped</li>
+            <li>Estimated time savings</li>
+            <li>Simple action plan</li>
+          </ul>
+          <span class="price">$150–$300</span>
+        </div>
+        <div class="card">
+          <h3>Implementation Package</h3>
+          <p>I build the highest-impact automations first so your team saves time immediately instead of admiring a roadmap forever.</p>
+          <ul>
+            <li>3–5 automations</li>
+            <li>Setup and testing</li>
+            <li>Documentation</li>
+            <li>2 weeks of support</li>
+          </ul>
+          <span class="price">$750–$1,500</span>
+        </div>
+        <div class="card">
+          <h3>Ongoing Automation Support</h3>
+          <p>For teams that want continued help maintaining workflows, fixing issues, and expanding what gets automated.</p>
+          <ul>
+            <li>Monitoring and fixes</li>
+            <li>Small updates</li>
+            <li>New automation requests</li>
+            <li>Monthly support</li>
+          </ul>
+          <span class="price">$250–$500/mo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>How it works</h2>
+          <p class="section-sub">A simple process so you are not paying me to invent complexity.</p>
+        </div>
+      </div>
+      <div class="card steps">
+        <div class="step">
+          <h3>Free 15-minute fit call</h3>
+          <p>We figure out where your workflow is breaking, whether automation is worth it, and whether I’m the right fit.</p>
+        </div>
+        <div class="step">
+          <h3>Workflow audit</h3>
+          <p>I map where time is being lost, where follow-up breaks down, and which workflows should be automated first.</p>
+        </div>
+        <div class="step">
+          <h3>Implementation</h3>
+          <p>I build the highest-impact automations first so you get time savings and cleaner operations fast.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="workflows">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Example workflows I automate</h2>
+          <p class="section-sub">This is the part where “automation” stops being vague and starts looking useful.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="workflow-card">
+          <div class="workflow-title">Website form → CRM → notification → follow-up</div>
+          <div class="workflow-line">
+            <span class="flow-step">Form Submitted</span><span class="arrow">→</span>
+            <span class="flow-step">CRM Record Created</span><span class="arrow">→</span>
+            <span class="flow-step">Owner Assigned</span><span class="arrow">→</span>
+            <span class="flow-step">Task + Alert Sent</span>
+          </div>
+          <div class="result">Result: faster speed-to-lead and fewer missed opportunities.</div>
+        </div>
+
+        <div class="workflow-card">
+          <div class="workflow-title">Missed call → SMS follow-up → CRM log</div>
+          <div class="workflow-line">
+            <span class="flow-step">Missed Call</span><span class="arrow">→</span>
+            <span class="flow-step">Auto Text Sent</span><span class="arrow">→</span>
+            <span class="flow-step">Activity Logged</span>
+          </div>
+          <div class="result">Result: better response coverage without manual chasing.</div>
+        </div>
+
+        <div class="workflow-card">
+          <div class="workflow-title">Closed-won deal → onboarding checklist → kickoff scheduling</div>
+          <div class="workflow-line">
+            <span class="flow-step">Deal Won</span><span class="arrow">→</span>
+            <span class="flow-step">Checklist Created</span><span class="arrow">→</span>
+            <span class="flow-step">Welcome Email Sent</span><span class="arrow">→</span>
+            <span class="flow-step">Kickoff Scheduled</span>
+          </div>
+          <div class="result">Result: cleaner customer handoffs and less onboarding chaos.</div>
+        </div>
+
+        <div class="workflow-card">
+          <div class="workflow-title">Intake form → CRM + tracking sheet populated</div>
+          <div class="workflow-line">
+            <span class="flow-step">Form Completed</span><span class="arrow">→</span>
+            <span class="flow-step">CRM Updated</span><span class="arrow">→</span>
+            <span class="flow-step">Sheet Synced</span>
+          </div>
+          <div class="result">Result: less duplicate entry and cleaner reporting.</div>
+        </div>
+
+        <div class="workflow-card">
+          <div class="workflow-title">Invoice created → follow-up reminders</div>
+          <div class="workflow-line">
+            <span class="flow-step">Invoice Sent</span><span class="arrow">→</span>
+            <span class="flow-step">Reminder Sequence</span><span class="arrow">→</span>
+            <span class="flow-step">Internal Visibility</span>
+          </div>
+          <div class="result">Result: more consistent collections follow-up and less admin work.</div>
+        </div>
+
+        <div class="workflow-card">
+          <div class="workflow-title">Status change → internal notification</div>
+          <div class="workflow-line">
+            <span class="flow-step">Stage Updated</span><span class="arrow">→</span>
+            <span class="flow-step">Team Alert</span><span class="arrow">→</span>
+            <span class="flow-step">Next Action Triggered</span>
+          </div>
+          <div class="result">Result: better alignment without constant manual checking.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container about">
+      <div class="card">
+        <div class="kicker">About me</div>
+        <h2>Practical systems, not fake AI glitter.</h2>
+        <p>
+          I work in client-facing SaaS and operations, where I’ve seen firsthand how much time small teams lose to manual work, unclear ownership, and disconnected systems.
+        </p>
+        <p>
+          My background is in workflows, customer-facing software, and process improvement. I focus on building practical automations that reduce admin, improve follow-up, and make it easier for teams to operate cleanly without adding unnecessary complexity.
+        </p>
+        <p>
+          Translation: I’m here to make the tools you already use work better.
+        </p>
+      </div>
+      <div class="stat-box">
+        <div class="stat">
+          <strong>Best fit tools</strong>
+          Gmail, Google Sheets, forms, lightweight CRMs, notifications, and practical workflow glue.
+        </div>
+        <div class="stat">
+          <strong>Best fit companies</strong>
+          Small B2B SaaS teams, agencies, and lean service businesses with messy ops.
+        </div>
+        <div class="stat">
+          <strong>Best fit outcomes</strong>
+          Faster follow-up, cleaner handoffs, less manual admin, better visibility.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="container">
+      <div class="cta-box">
+        <div class="kicker">Ready to make your workflows less manual?</div>
+        <h2>Tell me what part of your process feels more manual than it should.</h2>
+        <p class="section-sub" style="margin-left:auto; margin-right:auto;">
+          Replace the button links below with your real Calendly, email, or contact form when you’re ready.
+        </p>
+        <div class="hero-actions" style="justify-content:center; margin-top:22px;">
+          <a class="button button-primary" href="mailto:you@example.com?subject=Workflow%20Automation%20Inquiry">Email me</a>
+          <a class="button button-secondary" href="https://calendly.com/your-link" target="_blank" rel="noopener">Book a call</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Built to be deployed for free on Cloudflare Pages or GitHub Pages.
+    </div>
+  </footer>
+</body>
+</html>
